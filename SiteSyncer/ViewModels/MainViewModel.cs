@@ -12,6 +12,8 @@ namespace SiteSyncer.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public event Action<Site> NeedEdit;
+
         public ObservableCollection<Site> Sites { get; }
 
         public ObservableCollection<FileViewModel> Files { get; }
@@ -29,11 +31,13 @@ namespace SiteSyncer.ViewModels
                 {
                     ReloadCommand.ChangeCanExecute(false);
                     SyncCommand.ChangeCanExecute(false);
+                    EditCommand.ChangeCanExecute(1);
                 }
                 else
                 {
                     ReloadCommand.ChangeCanExecute(true);
                     SyncCommand.ChangeCanExecute(true);
+                    EditCommand.ChangeCanExecute(-1);
                     var t = Reload();
                 }
             }
@@ -60,6 +64,8 @@ namespace SiteSyncer.ViewModels
 
         public AsyncCommand SyncCommand { get; }
 
+        public CounterCommand EditCommand { get; }
+
         #endregion
 
         public MainViewModel()
@@ -69,6 +75,9 @@ namespace SiteSyncer.ViewModels
 
             SyncCommand = new AsyncCommand(_ => Sync());
             SyncCommand.ChangeCanExecute(false);
+
+            EditCommand = new CounterCommand(_ => NeedEdit?.Invoke(Site));
+            EditCommand.ChangeCanExecute(1);
 
             Sites = new ObservableCollection<Site>();
             Files = new ObservableCollection<FileViewModel>();

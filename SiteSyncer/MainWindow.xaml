@@ -33,7 +33,7 @@
         <StackPanel Grid.Column="2">
             <Button Content="Settings" Click="SettingsButton_Click" />
             <Button Content="New" Click="NewButton_Click" />
-            <Button Content="Edit" />
+            <Button Content="Edit" Command="{Binding EditCommand}" />
             <Button Content="Remove" />
             <Button Content="Reload" Command="{Binding ReloadCommand}" />
             <Button Content="Sync" Command="{Binding SyncCommand}" />

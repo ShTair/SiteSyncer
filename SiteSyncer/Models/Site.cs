@@ -7,7 +7,18 @@ namespace SiteSyncer.Models
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _Name; }
+            set
+            {
+                if (_Name == value) return;
+                _Name = value;
+                PropertyChanged?.Invoke(this, _NameChangedEventArgs);
+            }
+        }
+        private string _Name;
+        private PropertyChangedEventArgs _NameChangedEventArgs = new PropertyChangedEventArgs(nameof(Name));
 
         public string Repository { get; set; }
 
