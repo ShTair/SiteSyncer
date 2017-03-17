@@ -31,10 +31,39 @@
         </Grid>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
         <StackPanel Grid.Column="2">
+            <Button Content="Settings" Click="SettingsButton_Click" />
             <Button Content="New" Click="NewButton_Click" />
             <Button Content="Edit" />
             <Button Content="Remove" />
             <Button Content="Sync" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="3" />
+                    </Style>
+                </Grid.Resources>
+                <TextBlock Grid.Row="0" Text="Site Hash:" HorizontalAlignment="Right" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Site.CurrentHash}" />
+                <TextBlock Grid.Row="1" Text="Repository Hash:" HorizontalAlignment="Right" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentHash}" />
+            </Grid>
+            <ListBox Height="150" ItemsSource="{Binding Files}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
     </Grid>
 </Window>

@@ -28,10 +28,17 @@ namespace SiteSyncer
                     BaseUri = w.BaseUriBox.Text,
                     UserName = w.UserNameBox.Text,
                     Password = w.PasswordBox.Text,
+                    CurrentHash = w.CurrentHashBox.Text,
                 };
 
                 ((MainViewModel)DataContext).RegisterSite(site);
             }
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new SettingsWindow { Owner = this };
+            w.ShowDialog();
         }
     }
 }
