@@ -3,9 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:local="clr-namespace:SiteSyncer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Site Syncer" Height="350" Width="525">
+    <Window.Resources>
+        <CollectionViewSource x:Key="Source1" Source="{Binding Sites}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription Direction="Descending" PropertyName="LastSync" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="6" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <ListBox ItemsSource="{Binding Source={StaticResource Source1}}" SelectedItem="{Binding Site}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
+        <StackPanel Grid.Column="2">
+            <Button Content="New" Click="NewButton_Click" />
+            <Button Content="Edit" />
+            <Button Content="Remove" />
+            <Button Content="Sync" />
+        </StackPanel>
     </Grid>
 </Window>

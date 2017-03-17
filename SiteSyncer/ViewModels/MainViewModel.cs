@@ -97,8 +97,15 @@ namespace SiteSyncer.ViewModels
             if (Files.All(t => t.Synced))
             {
                 Site.CurrentHash = CurrentHash;
+                Site.LastSync = DateTime.Now;
                 //Save
             }
+        }
+
+        public void RegisterSite(Site site)
+        {
+            site.LastSync = DateTime.Now;
+            Sites.Add(site);
         }
     }
 }

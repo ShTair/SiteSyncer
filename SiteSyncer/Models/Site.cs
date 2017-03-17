@@ -1,8 +1,14 @@
-﻿namespace SiteSyncer.Models
+﻿using System;
+
+namespace SiteSyncer.Models
 {
     class Site
     {
+        public string Name { get; set; }
+
         public string Repository { get; set; }
+
+        public DateTime LastSync { get; set; }
 
         #region FtpProperties
 
