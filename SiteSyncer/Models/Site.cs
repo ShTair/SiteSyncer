@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 
 namespace SiteSyncer.Models
@@ -32,6 +33,7 @@ namespace SiteSyncer.Models
 
         public string PasswordHash { get; set; }
 
+        [JsonIgnore]
         public string Password
         {
             get { return Utils.Unprotect(PasswordHash, "SiteSyncer"); }

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SiteSyncer
 {
@@ -34,6 +37,38 @@ namespace SiteSyncer
             var oeb = _utf8.GetBytes(optionalEntropy);
             var udb = ProtectedData.Unprotect(pdb, oeb, DataProtectionScope.CurrentUser);
             return _utf8.GetString(udb);
+        }
+
+        public static async Task<string> ReadToEndAsync(string path)
+        {
+            using (var reader = File.OpenText(path))
+            {
+                return await reader.ReadToEndAsync();
+            }
+        }
+
+        public static async Task WriteAsync(string path, string value)
+        {
+            using (var writer = File.CreateText(path))
+            {
+                await writer.WriteAsync(value);
+            }
+        }
+
+        public static async Task<T> LoadAsync<T>(string path)
+        {
+            try
+            {
+                var json = await ReadToEndAsync(path);
+                return JsonConvert.DeserializeObject<T>(json);
+            }
+            catch { return default(T); }
+        }
+
+        public static async Task SaveAsync(string path, object value)
+        {
+            var json = JsonConvert.SerializeObject(value, Formatting.Indented);
+            await WriteAsync(path, json);
         }
     }
 }

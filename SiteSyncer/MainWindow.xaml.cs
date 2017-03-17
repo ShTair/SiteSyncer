@@ -36,6 +36,8 @@ namespace SiteSyncer
                 site.UserName = w.UserNameBox.Text;
                 site.Password = w.PasswordBox.Text;
                 site.CurrentHash = w.CurrentHashBox.Text;
+
+                ((MainViewModel)DataContext).SaveSite();
             }
         }
 

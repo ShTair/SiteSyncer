@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -81,6 +82,24 @@ namespace SiteSyncer.ViewModels
 
             Sites = new ObservableCollection<Site>();
             Files = new ObservableCollection<FileViewModel>();
+
+            var t = LoadSite();
+        }
+
+        private async Task LoadSite()
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+            var path = Path.Combine(Path.GetDirectoryName(config.FilePath), "Sites");
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+            Sites.Clear();
+            foreach (var item in Directory.EnumerateFiles(path, "*.json"))
+            {
+                var site = await Utils.LoadAsync<Site>(item);
+                if (site == null) continue;
+
+                Sites.Add(site);
+            }
         }
 
         private async Task Reload()
@@ -132,14 +151,27 @@ namespace SiteSyncer.ViewModels
             {
                 Site.CurrentHash = CurrentHash;
                 Site.LastSync = DateTime.Now;
-                //Save
+                await SaveSite(Site);
             }
+        }
+
+        private async Task SaveSite(Site site)
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+            var path = Path.Combine(Path.GetDirectoryName(config.FilePath), "Sites", site.Name + ".json");
+            await Utils.SaveAsync(path, site);
+        }
+
+        public Task SaveSite()
+        {
+            return SaveSite(Site);
         }
 
         public void RegisterSite(Site site)
         {
             site.LastSync = DateTime.Now;
             Sites.Add(site);
+            var _ = SaveSite(site);
         }
     }
 }
