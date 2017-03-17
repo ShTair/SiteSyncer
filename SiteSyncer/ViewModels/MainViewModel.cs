@@ -28,10 +28,12 @@ namespace SiteSyncer.ViewModels
                 if (value == null)
                 {
                     ReloadCommand.ChangeCanExecute(false);
+                    SyncCommand.ChangeCanExecute(false);
                 }
                 else
                 {
                     ReloadCommand.ChangeCanExecute(true);
+                    SyncCommand.ChangeCanExecute(true);
                     var t = Reload();
                 }
             }
@@ -56,12 +58,17 @@ namespace SiteSyncer.ViewModels
 
         public AsyncCommand ReloadCommand { get; }
 
+        public AsyncCommand SyncCommand { get; }
+
         #endregion
 
         public MainViewModel()
         {
             ReloadCommand = new AsyncCommand(_ => Reload());
             ReloadCommand.ChangeCanExecute(false);
+
+            SyncCommand = new AsyncCommand(_ => Sync());
+            SyncCommand.ChangeCanExecute(false);
 
             Sites = new ObservableCollection<Site>();
             Files = new ObservableCollection<FileViewModel>();

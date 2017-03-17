@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace SiteSyncer.Models
 {
-    class Site
+    class Site : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string Name { get; set; }
 
         public string Repository { get; set; }
@@ -26,6 +29,17 @@ namespace SiteSyncer.Models
 
         #endregion
 
-        public string CurrentHash { get; set; }
+        public string CurrentHash
+        {
+            get { return _CurrentHash; }
+            set
+            {
+                if (_CurrentHash == value) return;
+                _CurrentHash = value;
+                PropertyChanged?.Invoke(this, _CurrentHashChangedEventArgs);
+            }
+        }
+        private string _CurrentHash;
+        private PropertyChangedEventArgs _CurrentHashChangedEventArgs = new PropertyChangedEventArgs(nameof(CurrentHash));
     }
 }

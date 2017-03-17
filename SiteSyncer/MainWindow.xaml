@@ -36,7 +36,7 @@
             <Button Content="Edit" />
             <Button Content="Remove" />
             <Button Content="Reload" Command="{Binding ReloadCommand}" />
-            <Button Content="Sync" />
+            <Button Content="Sync" Command="{Binding SyncCommand}" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -60,6 +60,8 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Synced}" />
+                            <TextBlock Text=" " />
                             <TextBlock Text="{Binding}" />
                         </StackPanel>
                     </DataTemplate>
