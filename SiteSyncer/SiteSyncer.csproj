@@ -70,6 +70,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\Site.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="ViewModels\AsyncCommand.cs" />
     <Compile Include="ViewModels\FileViewModel.cs" />
     <Compile Include="ViewModels\FtpClient.cs" />
     <Compile Include="ViewModels\GitManager.cs" />

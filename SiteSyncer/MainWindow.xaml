@@ -35,6 +35,7 @@
             <Button Content="New" Click="NewButton_Click" />
             <Button Content="Edit" />
             <Button Content="Remove" />
+            <Button Content="Reload" Command="{Binding ReloadCommand}" />
             <Button Content="Sync" />
             <Grid>
                 <Grid.ColumnDefinitions>

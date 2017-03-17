@@ -24,7 +24,16 @@ namespace SiteSyncer.ViewModels
                 if (_Site == value) return;
                 _Site = value;
                 PropertyChanged?.Invoke(this, _SiteChangedEventArgs);
-                var t = Reload();
+
+                if (value == null)
+                {
+                    ReloadCommand.ChangeCanExecute(false);
+                }
+                else
+                {
+                    ReloadCommand.ChangeCanExecute(true);
+                    var t = Reload();
+                }
             }
         }
         private Site _Site;
@@ -43,8 +52,17 @@ namespace SiteSyncer.ViewModels
         private string _CurrentHash;
         private PropertyChangedEventArgs _CurrentHashChangedEventArgs = new PropertyChangedEventArgs(nameof(CurrentHash));
 
+        #region Commands
+
+        public AsyncCommand ReloadCommand { get; }
+
+        #endregion
+
         public MainViewModel()
         {
+            ReloadCommand = new AsyncCommand(_ => Reload());
+            ReloadCommand.ChangeCanExecute(false);
+
             Sites = new ObservableCollection<Site>();
             Files = new ObservableCollection<FileViewModel>();
         }

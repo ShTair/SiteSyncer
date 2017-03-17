@@ -12,6 +12,8 @@ namespace SiteSyncer.Views
         public SettingsWindow()
         {
             InitializeComponent();
+
+            GitPath.Path = Settings.Default.GitPath;
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
