@@ -8,6 +8,25 @@ namespace SiteSyncer.ViewModels
 {
     static class GitManager
     {
+        public static async Task Checkout(string repository, string target)
+        {
+            var pi = new ProcessStartInfo
+            {
+                FileName = Settings.Default.GitPath,
+                WorkingDirectory = repository,
+                Arguments = $"checkout {target}",
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                StandardOutputEncoding = Encoding.UTF8,
+            };
+
+            using (var p = Process.Start(pi))
+            {
+                await p.StandardOutput.ReadToEndAsync();
+            }
+        }
+
         public static async Task<List<string>> Diff(string repository, string before, string after)
         {
             var pi = new ProcessStartInfo
