@@ -41,7 +41,7 @@ namespace SiteSyncer
             }
         }
 
-        private void NewButton_Click(object sender, RoutedEventArgs e)
+        private void NewMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var w = new SiteSettingsWindow { Owner = this };
             if (w.ShowDialog() == true)
@@ -60,7 +60,7 @@ namespace SiteSyncer
             }
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        private void SettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var w = new SettingsWindow { Owner = this };
             w.ShowDialog();

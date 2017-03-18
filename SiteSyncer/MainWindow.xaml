@@ -14,59 +14,78 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </Window.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
-            <ColumnDefinition Width="6" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Site">
+                <MenuItem Header="New..." Click="NewMenuItem_Click" />
+                <Separator />
+                <MenuItem Header="Edit..." Command="{Binding EditCommand}" />
+                <MenuItem Header="Remove" />
+            </MenuItem>
+            <MenuItem Header="Settings..." Click="SettingsMenuItem_Click" />
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem Content="Ready..." />
+        </StatusBar>
         <Grid>
-            <ListBox ItemsSource="{Binding Source={StaticResource Source1}}" SelectedItem="{Binding Site}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
-        <StackPanel Grid.Column="2">
-            <Button Content="Settings" Click="SettingsButton_Click" />
-            <Button Content="New" Click="NewButton_Click" />
-            <Button Content="Edit" Command="{Binding EditCommand}" />
-            <Button Content="Remove" />
-            <Button Content="Reload" Command="{Binding ReloadCommand}" />
-            <Button Content="Sync" Command="{Binding SyncCommand}" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Margin" Value="3" />
-                    </Style>
-                </Grid.Resources>
-                <TextBlock Grid.Row="0" Text="Site Hash:" HorizontalAlignment="Right" />
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Site.CurrentHash}" />
-                <TextBlock Grid.Row="1" Text="Repository Hash:" HorizontalAlignment="Right" />
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentHash}" />
+                <ListBox Margin="3" ItemsSource="{Binding Source={StaticResource Source1}}" SelectedItem="{Binding Site}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
-            <ListBox Height="150" ItemsSource="{Binding Files}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Synced}" />
-                            <TextBlock Text=" " />
-                            <TextBlock Text="{Binding}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-    </Grid>
+            <DockPanel Grid.Column="1">
+                <Grid DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="3" />
+                        </Style>
+                    </Grid.Resources>
+                    <TextBlock Grid.Row="0" Text="Site Name:" HorizontalAlignment="Right" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Site.Name}" />
+                    <TextBlock Grid.Row="1" Text="Site Hash:" HorizontalAlignment="Right" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Site.CurrentHash}" />
+                    <TextBlock Grid.Row="2" Text="Repository Hash:" HorizontalAlignment="Right" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentHash}" />
+                </Grid>
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Width" Value="75" />
+                            <Setter Property="Margin" Value="3" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Content="Reload" Command="{Binding ReloadCommand}" />
+                    <Button Content="Sync" Command="{Binding SyncCommand}" />
+                </StackPanel>
+                <ListBox ItemsSource="{Binding Files}" Margin="3">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Synced}" />
+                                <TextBlock Text=" " />
+                                <TextBlock Text="{Binding}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
 </Window>
