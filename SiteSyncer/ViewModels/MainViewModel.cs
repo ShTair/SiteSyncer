@@ -110,6 +110,8 @@ namespace SiteSyncer.ViewModels
             Files.Clear();
             foreach (var file in files)
             {
+                if (file[0] == '"') continue;
+
                 var fvm = new FileViewModel
                 {
                     Uri = file,
